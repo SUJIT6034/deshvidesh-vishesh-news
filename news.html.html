@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>देश और विदेश का विशेष न्यूज</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #d32f2f, #b71c1c);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1rem;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            margin-left: 10px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+            color: #ffd54f;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+        
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .search-bar {
+            display: flex;
+            margin: 1rem auto;
+            max-width: 600px;
+            padding: 0 1rem;
+        }
+        
+        .search-bar input {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+            outline: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .search-bar button {
+            background: #ff9800;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        
+        .search-bar button:hover {
+            background: #f57c00;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            color: #d32f2f;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #d32f2f;
+            display: inline-block;
+        }
+        
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .news-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+        .news-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .news-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .news-card:hover .news-image img {
+            transform: scale(1.05);
+        }
+        
+        .news-content {
+            padding: 1.5rem;
+        }
+        
+        .news-category {
+            display: inline-block;
+            background: #d32f2f;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        .news-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+        
+        .news-excerpt {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        .video-section {
+            margin: 3rem 0;
+        }
+        
+        .video-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+        
+        .video-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .video-player {
+            height: 200px;
+            background: #222;
+            position: relative;
+        }
+        
+        .video-player i {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 4rem;
+            opacity: 0.7;
+        }
+        
+        .video-info {
+            padding: 1.5rem;
+        }
+        
+        .video-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+        
+        .video-duration {
+            color: #d32f2f;
+            font-weight: 600;
+        }
+        
+        .contact-section {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 3rem 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .contact-title {
+            font-size: 1.8rem;
+            color: #d32f2f;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .contact-item i {
+            font-size: 1.5rem;
+            color: #d32f2f;
+            margin-right: 1rem;
+        }
+        
+        .contact-text {
+            font-size: 1.1rem;
+        }
+        
+        .map {
+            margin-top: 2rem;
+            height: 300px;
+            background: #eee;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+        
+        .breaking-news {
+            background: #ffeb3b;
+            color: #333;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            animation: blink 2s infinite;
+        }
+        
+        .breaking-news i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+        
+        .live-update {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+        }
+        
+        .live-update i {
+            margin-right: 8px;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .language-badge {
+            background: #2196f3;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            display: inline-block;
+        }
+        
+        footer {
+            background: #333;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 0 1rem;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 2rem;
+            padding-right: 1rem;
+        }
+        
+        .footer-section h3 {
+            color: #ff9800;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-section a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: #ff9800;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: #444;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+        
+        .social-icons a:hover {
+            background: #ff9800;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #444;
+            margin-top: 2rem;
+            color: #aaa;
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav li {
+                margin: 0.5rem;
+            }
+            
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .video-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-globe-asia"></i>
+                <h1>देश और विदेश का विशेष न्यूज</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#"><i class="fas fa-home"></i> होम</a></li>
+                    <li><a href="#"><i class="fas fa-fire"></i> ब्रेकिंग</a></li>
+                    <li><a href="#"><i class="fas fa-video"></i> वीडियो</a></li>
+                    <li><a href="#"><i class="fas fa-image"></i> फोटो</a></li>
+                    <li><a href="#"><i class="fas fa-address-card"></i> संपर्क</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="search-bar">
+        <input type="text" id="search-input" placeholder="दुनिया भर से ताज़ा खबरें खोजें...">
+        <button id="search-button"><i class="fas fa-search"></i> खोजें</button>
+    </div>
+    
+    <div class="breaking-news">
+        <i class="fas fa-bullhorn"></i>
+        <span id="breaking-news-text">ब्रेकिंग: भारत और अमेरिका ने नई व्यापार साझेदारी पर हस्ताक्षर किए, दोनों देशों के लिए नए अवसरों की उम्मीद</span>
+    </div>
+    
+    <div class="container">
+        <h2 class="section-title">आज की ताज़ा खबरें (24 जून 2025)</h2>
+        
+        <div class="news-grid">
+            <div class="news-card">
+                <div class="news-image">
+                    <img src="https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="News Image">
+                </div>
+                <div class="news-content">
+                    <span class="news-category">राजनीति</span>
+                    <h3 class="news-title">मोदी सरकार ने घोषित की नई किसान योजना, कृषि क्षेत्र को मिलेगा बढ़ावा</h3>
+                    <p class="news-excerpt">केंद्र सरकार ने आज एक नई किसान कल्याण योजना की घोषणा की जिसके तहत किसानों को अतिरिक्त सब्सिडी और बेहतर बाजार पहुंच मिलेगी।</p>
+                    <div class="news-meta">
+                        <span><i class="far fa-clock"></i> 2 घंटे पहले</span>
+                        <span><i class="fas fa-language"></i> हिंदी</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="news-card">
+                <div class="news-image">
+                    <img src="https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="News Image">
+                </div>
+                <div class="news-content">
+                    <span class="news-category">खेल</span>
+                    <h3 class="news-title">वर्ल्ड कप क्रिकेट: भारत ने जीता शानदार मैच, कोहली का शतक</h3>
+                    <p class="news-excerpt">विराट कोहली के शानदार शतक की बदौलत भारत ने ऑस्ट्रेलिया के खिलाफ जीत दर्ज की और सेमीफाइनल में जगह बनाई।</p>
+                    <div class="news-meta">
+                        <span><i class="far fa-clock"></i> 3 घंटे पहले</span>
+                        <span class="language-badge">अंग्रेजी से अनुवादित</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="news-card">
+                <div class="news-image">
+                    <img src="https://images.unsplash.com/photo-1586773860418-d37222d8fce3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="News Image">
+                </div>
+                <div class="news-content">
+                    <span class="news-category">तकनीक</span>
+                    <h3 class="news-title">भारतीय स्टार्टअप ने बनाया विश्व का सबसे तेज चार्जिंग स्मार्टफोन</h3>
+                    <p class="news-excerpt">एक भारतीय स्टार्टअप ने दावा किया है कि उसने दुनिया का सबसे तेज चार्जिंग स्मार्टफोन बनाया है जो 5 मिनट में पूरी तरह चार्ज हो जाता है।</p>
+                    <div class="news-meta">
+                        <span><i class="far fa-clock"></i> 5 घंटे पहले</span>
+                        <span class="language-badge">चीनी से अनुवादित</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="news-card">
+                <div class="news-image">
+                    <img src="https://images.unsplash.com/photo-1589652717521-10c0d092dea9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="News Image">
+                </div>
+                <div class="news-content">
+                    <span class="news-category">अंतरराष्ट्रीय</span>
+                    <h3 class="news-title">यूक्रेन संकट पर संयुक्त राष्ट्र की बैठक, शांति प्रस्ताव पर चर्चा</h3>
+                    <p class="news-excerpt">संयुक्त राष्ट्र सुरक्षा परिषद ने यूक्रेन संकट पर आपात बैठक बुलाई और नए शांति प्रस्ताव पर चर्चा की।</p>
+                    <div class="news-meta">
+                        <span><i class="far fa-clock"></i> 6 घंटे पहले</span>
+                        <span class="language-badge">रूसी से अनुवादित</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="news-card">
+                <div class="news-image">
+                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="News Image">
+                </div>
+                <div class="news-content">
+                    <span class="news-category">स्वास्थ्य</span>
+                    <h3 class="news-title">आयुर्वेदिक दवाओं पर नया शोध, कैंसर उपचार में मिली सफलता</h3>
+                    <p class="news-excerpt">भारतीय शोधकर्ताओं ने कैंसर उपचार में आयुर्वेदिक दवाओं की प्रभावकारिता साबित करने वाला नया अध्ययन प्रकाशित किया है।</p>
+                    <div class="news-meta">
+                        <span><i class="far fa-clock"></i> 8 घंटे पहले</span>
+                        <span><i class="fas fa-language"></i> हिंदी</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="news-card">
+                <div class="news-image">
+                    <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="News Image">
+                </div>
+                <div class="news-content">
+                    <span class="news-category">पर्यावरण</span>
+                    <h3 class="news-title">हिमालय में बर्फबारी में आई कमी, वैज्ञानिकों ने जताई चिंता</h3>
+                    <p class="news-excerpt">नए अध्ययन में पाया गया है कि पिछले एक दशक में हिमालय क्षेत्र में बर्फबारी में 30% की कमी आई है, जिससे जल संकट का खतरा बढ़ गया है।</p>
+                    <div class="news-meta">
+                        <span><i class="far fa-clock"></i> 10 घंटे पहले</span>
+                        <span class="language-badge">फ्रेंच से अनुवादित</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="video-section">
+            <h2 class="section-title">वीडियो न्यूज</h2>
+            
+            <div class="video-container">
+                <div class="video-card">
+                    <div class="video-player">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">दिल्ली में भारी बारिश, जलभराव से परेशानी</h3>
+                        <p class="video-duration"><i class="far fa-clock"></i> 2:45 मिनट</p>
+                    </div>
+                </div>
+                
+                <div class="video-card">
+                    <div class="video-player">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">मुंबई लोकल ट्रेन में नई तकनीक का परीक्षण</h3>
+                        <p class="video-duration"><i class="far fa-clock"></i> 4:20 मिनट</p>
+                    </div>
+                </div>
+                
+                <div class="video-card">
+                    <div class="video-player">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">NASA का नया मिशन, मंगल पर जीवन की तलाश</h3>
+                        <p class="video-duration"><i class="far fa-clock"></i> 3:15 मिनट</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="contact-section">
+            <h2 class="contact-title">हमसे संपर्क करें</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-building"></i>
+                    <div class="contact-text">
+                        <strong>Kimi online Center</strong><br>
+                        Garikalan, Barkagaon, Jharkhand<br>
+                        Pin code 825311
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <div class="contact-text">
+                        <strong>Phone:</strong> 9693468752
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <div class="contact-text">
+                        <strong>Email:</strong> contact@deshvideshnews.com
+                    </div>
+                </div>
+            </div>
+            
+            <div class="map">
+                <i class="fas fa-map-marker-alt"></i> Garikalan, Barkagaon, Jharkhand - Google Map
+            </div>
+        </div>
+    </div>
+    
+    <div class="live-update">
+        <i class="fas fa-sync-alt"></i>
+        <span>खबरें अपडेट हो रही हैं...</span>
+    </div>
+    
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>देश और विदेश का विशेष न्यूज</h3>
+                <p>विश्वसनीय, त्वरित और सटीक खबरों के लिए भारत का प्रमुख न्यूज पोर्टल। हम दुनिया भर से खबरें लाते हैं और हिंदी में प्रस्तुत करते हैं।</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>श्रेणियाँ</h3>
+                <ul>
+                    <li><a href="#">राजनीति</a></li>
+                    <li><a href="#">खेल</a></li>
+                    <li><a href="#">मनोरंजन</a></li>
+                    <li><a href="#">व्यापार</a></li>
+                    <li><a href="#">तकनीक</a></li>
+                    <li><a href="#">स्वास्थ्य</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>उपयोगी लिंक</h3>
+                <ul>
+                    <li><a href="#">हमारे बारे में</a></li>
+                    <li><a href="#">संपर्क करें</a></li>
+                    <li><a href="#">गोपनीयता नीति</a></li>
+                    <li><a href="#">शर्तें और नियम</a></li>
+                    <li><a href="#">विज्ञापन दें</a></li>
+                    <li><a href="#">करियर</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2025 देश और विदेश का विशेष न्यूज। सभी अधिकार सुरक्षित।
+        </div>
+    </footer>
+    
+    <script>
+        // Breaking news ticker
+        const breakingNewsTexts = [
+            "ब्रेकिंग: भारत और अमेरिका ने नई व्यापार साझेदारी पर हस्ताक्षर किए, दोनों देशों के लिए नए अवसरों की उम्मीद",
+            "ब्रेकिंग: मुंबई में भारी बारिश, शहर के कई हिस्सों में जलभराव की स्थिति",
+            "ब्रेकिंग: विश्व बैंक ने भारत की विकास दर 7.5% रहने का अनुमान लगाया",
+            "ब्रेकिंग: सुप्रीम कोर्ट ने आरक्षण पर महत्वपूर्ण फैसला सुनाया",
+            "ब्रेकिंग: भारतीय टीम विश्व कप फाइनल में पहुँची, रविवार को निर्णायक मुकाबला"
+        ];
+        
+        let currentNewsIndex = 0;
+        const breakingNewsElement = document.getElementById('breaking-news-text');
+        
+        function updateBreakingNews() {
+            breakingNewsElement.textContent = breakingNewsTexts[currentNewsIndex];
+            currentNewsIndex = (currentNewsIndex + 1) % breakingNewsTexts.length;
+        }
+        
+        // Update breaking news every 30 seconds
+        setInterval(updateBreakingNews, 30000);
+        
+        // Simulate news updates
+        function simulateNewsUpdate() {
+            const newsGrid = document.querySelector('.news-grid');
+            const firstNews = newsGrid.firstElementChild;
+            
+            // Create a new news card
+            const newNewsCard = document.createElement('div');
+            newNewsCard.className = 'news-card';
+            newNewsCard.innerHTML = `
+                <div class="news-image">
+                    <img src="https://images.unsplash.com/photo-1589652717521-10c0d092dea9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="New News">
+                </div>
+                <div class="news-content">
+                    <span class="news-category">अंतरराष्ट्रीय</span>
+                    <h3 class="news-title">यूरोपीय संघ ने घोषित किया नया जलवायु लक्ष्य, 2040 तक कार्बन उत्सर्जन में 70% कटौती</h3>
+                    <p class="news-excerpt">यूरोपीय संघ ने आज एक नया जलवायु लक्ष्य घोषित किया जिसके तहत 2040 तक कार्बन उत्सर्जन में 70% की कटौती करने का लक्ष्य रखा गया है।</p>
+                    <div class="news-meta">
+                        <span><i class="far fa-clock"></i> अभी अभी</span>
+                        <span class="language-badge">जर्मन से अनुवादित</span>
+                    </div>
+                </div>
+            `;
+            
+            // Add the new card at the top
+            newsGrid.insertBefore(newNewsCard, newsGrid.firstChild);
+            
+            // Remove the last card if there are more than 6
+            if (newsGrid.children.length > 6) {
+                newsGrid.removeChild(newsGrid.lastChild);
+            }
+            
+            // Show update notification
+            const updateNotification = document.createElement('div');
+            updateNotification.className = 'live-update';
+            updateNotification.style.bottom = '70px';
+            updateNotification.innerHTML = '<i class="fas fa-bell"></i> नई खबरें अपडेट हो गई हैं!';
+            document.body.appendChild(updateNotification);
+            
+            // Remove notification after 3 seconds
+            setTimeout(() => {
+                document.body.removeChild(updateNotification);
+            }, 3000);
+        }
+        
+        // Simulate news update every 2 minutes
+        setInterval(simulateNewsUpdate, 120000);
+        
+        // Search functionality
+        document.getElementById('search-button').addEventListener('click', function() {
+            const searchTerm = document.getElementById('search-input').value;
+            if (searchTerm.trim() !== '') {
+                alert(`"${searchTerm}" के लिए खोज परिणाम:\n\nहम विभिन्न अंतरराष्ट्रीय स्रोतों से इस विषय पर नवीनतम समाचार खोज रहे हैं और हिंदी में अनुवाद कर रहे हैं...`);
+            }
+        });
+        
+        // Auto-translation simulation
+        const languageBadges = document.querySelectorAll('.language-badge');
+        languageBadges.forEach(badge => {
+            badge.addEventListener('click', function() {
+                alert('यह खबर मूल रूप से अलग भाषा में थी और हमारी स्वचालित प्रणाली द्वारा हिंदी में अनुवादित की गई है।');
+            });
+        });
+        
+        // Simulate live updates
+        const liveUpdateElement = document.querySelector('.live-update');
+        
+        function pulseLiveUpdate() {
+            liveUpdateElement.style.transform = 'scale(1.05)';
+            setTimeout(() => {
+                liveUpdateElement.style.transform = 'scale(1)';
+            }, 500);
+        }
+        
+        // Pulse every 10 seconds
+        setInterval(pulseLiveUpdate, 10000);
+    </script>
+</body>
+</html>
